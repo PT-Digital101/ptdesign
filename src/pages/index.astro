@@ -1,50 +1,397 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+// Agency landing page. Edit the data below to change copy, prices and links.
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE as BRAND, SITE_DESCRIPTION as description, CONTACT_URL as LINE_URL } from "../consts";
+
+const title = `${BRAND} — รับทำเว็บไซต์ SEO และระบบจองผ่าน LINE`;
+
+const pillars = [
+	{
+		color: "yellow",
+		icon: "🔍",
+		title: "ให้คนเจอ",
+		sub: "เว็บไซต์ · SEO · AI SEO",
+		text: "ขึ้นหน้าแรกบน Google และถูกแนะนำโดย ChatGPT, Gemini และ Perplexity เมื่อลูกค้าถามหาธุรกิจแบบคุณ",
+		items: ["เว็บไซต์โหลดเร็ว รองรับมือถือ", "SEO พื้นฐานและ Google Maps", "AI SEO ให้ AI รู้จักธุรกิจคุณ", "ติดตั้งสถิติ Google Analytics"],
+		price: "เริ่มต้น ฿9,990",
+	},
+	{
+		color: "green",
+		icon: "📅",
+		title: "ให้คนจอง",
+		sub: "ระบบจองผ่าน LINE",
+		text: "ลูกค้าจองคิวได้ 24 ชั่วโมงผ่าน LINE ที่ใช้อยู่แล้ว ไม่ต้องโหลดแอปใหม่ ไม่ต้องรอแอดมินตอบ",
+		items: ["ปฏิทินจองคิวใน LINE OA", "แจ้งเตือนก่อนถึงนัดอัตโนมัติ", "เก็บข้อมูลลูกค้าเป็น CRM", "รับมัดจำผ่าน PromptPay"],
+		price: "พร้อมใช้ใน 3 วันทำการ",
+	},
+	{
+		color: "blue",
+		icon: "⚡",
+		title: "นำหน้าคู่แข่ง",
+		sub: "ระบบหลังบ้านและ AI",
+		text: "ให้ AI ช่วยตอบแชท ทำรายงาน และจัดการงานซ้ำๆ ทีมของคุณจะได้มีเวลาไปทำงานที่สร้างรายได้",
+		items: ["แชทบอทตอบคำถามที่พบบ่อย", "รายงานยอดขายส่งเข้า LINE", "เชื่อมต่อระบบที่ใช้อยู่", "แดชบอร์ดดูธุรกิจแบบเรียลไทม์"],
+		price: "เริ่มต้น ฿30,000",
+	},
+];
+
+const oldWay = [
+	"คุยหลายรอบกว่าจะได้ใบเสนอราคา",
+	"รอคิวออกแบบหลายสัปดาห์",
+	"แก้งานทีละนิดผ่านอีเมล",
+	"ส่งมอบแล้วต้องดูแลเอง",
+	"ไม่มีใครช่วยเรื่อง SEO ต่อ",
+];
+const ourWay = [
+	{ time: "วันที่ 1", text: "คุยความต้องการและเลือกแพ็กเกจ" },
+	{ time: "วันที่ 2", text: "ได้แบบหน้าแรกให้ดูและคอมเมนต์" },
+	{ time: "วันที่ 3–5", text: "พัฒนาเว็บไซต์และเชื่อม LINE" },
+	{ time: "วันที่ 6", text: "ตรวจ SEO ความเร็ว และมือถือ" },
+	{ time: "วันที่ 7", text: "เปิดใช้งานจริง พร้อมสอนใช้" },
+];
+
+const menu = [
+	{ name: "เว็บไซต์หน้าเดียว", price: "฿9,990", color: "yellow", picked: true },
+	{ name: "เว็บไซต์ธุรกิจ 5 หน้า", price: "฿19,990", color: "orange" },
+	{ name: "ระบบจองผ่าน LINE", price: "฿14,990", color: "green" },
+	{ name: "AI SEO รายเดือน", price: "฿4,990/ด.", color: "blue" },
+];
+
+const tools = ["ระบบจองคิว", "สต็อกสินค้า", "สมาชิกและแต้ม", "รายงานยอดขาย", "แชทบอท AI", "ใบเสนอราคา"];
+
+const steps = [
+	{ tag: "ขั้นที่ 1", title: "คุยกันก่อน", text: "บอกเราว่าธุรกิจทำอะไร อยากได้ลูกค้าแบบไหน ใช้เวลาไม่ถึง 30 นาที", color: "" },
+	{ tag: "ขั้นที่ 2", title: "ออกแบบ", text: "เราเสนอแบบหน้าแรกภายใน 48 ชั่วโมง แก้ได้จนกว่าจะพอใจ", color: "" },
+	{ tag: "ขั้นที่ 3", title: "พัฒนาและเชื่อมระบบ", text: "ทำเว็บไซต์ ตั้งค่า SEO และเชื่อม LINE ให้ครบในครั้งเดียว", color: "" },
+	{ tag: "ขั้นที่ 4", title: "เปิดใช้งาน", text: "ออนไลน์ภายใน 7 วัน พร้อมคู่มือและทีมดูแลหลังส่งมอบ", color: "green" },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="th">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={title} description={description} />
 	</head>
 	<body>
 		<Header />
+
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<!-- Hero -->
+			<section class="hero wrap">
+				<div class="hero-copy">
+					<span class="pill pill-yellow">เว็บไซต์ · SEO · AI SEO · ระบบจองผ่าน LINE · Automation</span>
+					<h1>
+						รับทำเว็บไซต์และ SEO โดย<mark>ทีมเทค</mark>ที่คุณไม่ต้องจ้างเอง
+					</h1>
+					<p class="lead">
+						เราดูแลทั้งเว็บไซต์ SEO, AI SEO และระบบจองผ่าน LINE ให้ธุรกิจของคุณครบในที่เดียว
+						คุณโฟกัสที่ลูกค้า เราดูแลเรื่องเทคโนโลยีให้
+					</p>
+					<div class="row">
+						<a href={LINE_URL} class="btn btn-orange">ปรึกษาฟรี →</a>
+						<a href="#packages" class="btn">ดูแพ็กเกจ</a>
+					</div>
+					<div class="row chips">
+						<span class="chip">เว็บไซต์พร้อมใช้ใน 7 วัน</span>
+						<span class="chip">เริ่มต้น ฿9,990</span>
+						<span class="chip">ระบบหลังบ้านเริ่มต้น ฿30,000</span>
+					</div>
+					<span class="pill pill-orange">ใหม่ AI SEO ให้ ChatGPT และ Gemini แนะนำธุรกิจคุณ</span>
+				</div>
+
+				<div class="hero-visual" aria-hidden="true">
+					<div class="note note-green tilt-r">
+						<b>✅ เว็บไซต์ขึ้นหน้าแรก Google แล้ว</b>
+						<small>อันดับ 1 · "คลินิกทันตกรรม ใกล้ฉัน"</small>
+					</div>
+					<div class="note tilt-l">
+						<b>📅 มีการจองใหม่ผ่าน LINE</b>
+						<small>พรุ่งนี้ 14:00 · ตัดผม + สระ</small>
+					</div>
+					<div class="note note-yellow tilt-r">
+						<b>💬 ChatGPT แนะนำร้านคุณ</b>
+						<small>"ร้านที่ได้รับรีวิวดีในย่านนี้คือ…"</small>
+					</div>
+					<div class="note note-blue tilt-l">
+						<b>📈 ยอดจองเดือนนี้ +38%</b>
+						<small>รายงานอัตโนมัติส่งเข้า LINE ทุกเช้า</small>
+					</div>
+				</div>
+			</section>
+
+			<!-- Three pillars -->
+			<section class="section wrap" id="services">
+				<h2>ให้คนเจอ ให้คนจอง<br />ให้ธุรกิจนำหน้า</h2>
+				<p class="section-lead">สามอย่างที่ทุกธุรกิจต้องมีในวันนี้ เราทำครบในทีมเดียว เริ่มจากส่วนที่คุณต้องการก่อนก็ได้</p>
+				<div class="grid-3">
+					{
+						pillars.map((p) => (
+							<article class={`card card-${p.color}`}>
+								<span class="icon">{p.icon}</span>
+								<h3>{p.title}</h3>
+								<p class="card-sub">{p.sub}</p>
+								<p>{p.text}</p>
+								<ul class="checks">
+									{p.items.map((i) => (
+										<li>{i}</li>
+									))}
+								</ul>
+								<p class="card-foot">{p.price} →</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- Brand starter -->
+			<section class="wrap">
+				<div class="banner banner-purple">
+					<div>
+						<span class="pill">ธุรกิจเปิดใหม่</span>
+						<h2>เปิดธุรกิจใหม่? เริ่มจากแบรนด์ที่คนจำได้</h2>
+						<p>ได้โลโก้ โทนสี ฟอนต์ และเว็บไซต์หน้าแรกในแพ็กเกจเดียว ทุกอย่างไปในทิศทางเดียวกันตั้งแต่วันแรก</p>
+						<div class="row">
+							<a href={LINE_URL} class="btn btn-orange">ทำแบรนด์ของคุณ →</a>
+							<a href="#packages" class="btn">ดูแพ็กเกจแบรนด์ →</a>
+						</div>
+					</div>
+					<div class="mock tilt-r" aria-hidden="true">
+						<div class="mock-head">
+							<b>ชุดแบรนด์ของคุณ</b>
+							<span class="tag tag-orange">฿5,990</span>
+						</div>
+						<div class="swatches">
+							<i style="background:#111"></i><i style="background:#ff7a3d"></i><i style="background:#ffd84d"></i><i style="background:#fff"></i>
+							<span class="aa">Aa</span>
+						</div>
+						<ul class="checks small">
+							<li>โลโก้และไอคอน</li>
+							<li>โทนสีและฟอนต์</li>
+							<li>คู่มือแบรนด์</li>
+							<li>เว็บไซต์หน้าแรก</li>
+						</ul>
+						<p class="mock-foot">→ พร้อมใช้ภายใน 7 วัน</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Speed comparison -->
+			<section class="section wrap center">
+				<span class="pill">ความเร็วคือข้อได้เปรียบ</span>
+				<h2>ออนไลน์ในหนึ่งสัปดาห์<br />ไม่ใช่สามเดือน</h2>
+				<p class="section-lead">ทุกวันที่ธุรกิจยังไม่มีเว็บไซต์ คือวันที่ลูกค้าไปหาคู่แข่ง เราจึงทำงานเป็นขั้นตอนชัดเจนและเร็ว</p>
+				<div class="compare">
+					<div class="card card-dashed">
+						<h3>แบบเดิมๆ</h3>
+						<ul class="crosses">
+							{oldWay.map((i) => <li>{i}</li>)}
+						</ul>
+						<p class="big muted">หลายเดือน</p>
+					</div>
+					<div class="card card-orange">
+						<h3>กับ {BRAND}</h3>
+						<ul class="timeline">
+							{
+								ourWay.map((s) => (
+									<li>
+										<span class="tag">{s.time}</span>
+										{s.text}
+									</li>
+								))
+							}
+						</ul>
+						<p class="big">ไม่กี่วัน</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Packages -->
+			<section class="band band-lavender" id="packages">
+				<div class="wrap split">
+					<div>
+						<span class="pill">แพ็กเกจพร้อมใช้</span>
+						<h2>ง่ายเหมือนสั่งอาหาร</h2>
+						<p>เลือกแพ็กเกจที่ใช่ ราคาชัดเจนตั้งแต่แรก ไม่มีค่าใช้จ่ายแอบแฝง เพิ่มบริการทีหลังได้ทุกเมื่อ</p>
+						<div class="row chips">
+							<span class="chip">1 · เลือก</span>
+							<span class="chip">2 · จ่าย</span>
+							<span class="chip chip-orange">3 · ออนไลน์ใน 7 วัน</span>
+						</div>
+						<p class="hint"><b>ไม่แน่ใจว่าเลือกอะไร?</b> ทักมาคุยฟรี เราช่วยแนะนำแพ็กเกจที่คุ้มที่สุดสำหรับธุรกิจคุณ</p>
+					</div>
+					<div class="mock">
+						<div class="mock-head">
+							<b>เมนูบริการ</b>
+							<span class="tag tag-green">● เปิดรับงาน</span>
+						</div>
+						<div class="menu">
+							{
+								menu.map((m) => (
+									<div class={`menu-item card-${m.color}`}>
+										<span>{m.name}</span>
+										<div class="menu-row">
+											<b>{m.price}</b>
+											<span class={`mini ${m.picked ? "mini-dark" : ""}`}>{m.picked ? "เลือกแล้ว" : "+ เพิ่ม"}</span>
+										</div>
+									</div>
+								))
+							}
+						</div>
+						<div class="mock-total">
+							<span>1 รายการ · ฿9,990</span>
+							<a href={LINE_URL} class="btn btn-orange btn-sm">สั่งเลย →</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- AI SEO -->
+			<section class="section wrap split" id="ai-seo">
+				<div class="mock chat tilt-l" aria-hidden="true">
+					<p class="chat-who">🤖 ผู้ช่วย AI</p>
+					<p class="bubble bubble-user">ร้านกาแฟดีๆ แถวอารีย์มีที่ไหนบ้าง?</p>
+					<p class="bubble">ร้านที่ได้รับรีวิวดีในย่านอารีย์:</p>
+					<ol class="results">
+						<li class="hit">ร้านของคุณ <span class="tag tag-orange">แนะนำ</span></li>
+						<li>ร้านอื่น</li>
+						<li>ร้านอื่น</li>
+					</ol>
+				</div>
+				<div>
+					<span class="pill">SEO · AI SEO</span>
+					<h2>AI SEO: ให้ธุรกิจคุณเป็นคำตอบ เมื่อลูกค้าถาม ChatGPT</h2>
+					<p>คนไทยจำนวนมากเริ่มค้นหาร้านและบริการผ่าน AI แทน Google เราปรับข้อมูลธุรกิจให้ทั้ง Google และ AI เข้าใจและแนะนำคุณได้</p>
+					<div class="grid-2">
+						<div class="card card-yellow tight">
+							<b>SEO</b>
+							<small>ติดอันดับบน Google และ Google Maps</small>
+						</div>
+						<div class="card card-orange tight">
+							<b>AI SEO</b>
+							<small>ถูกแนะนำโดย ChatGPT, Gemini และ Perplexity</small>
+						</div>
+					</div>
+					<ul class="checks">
+						<li>ตรวจสถานะธุรกิจบน Google และ AI ฟรี</li>
+						<li>ปรับข้อมูลให้ตรงกันทุกแพลตฟอร์ม</li>
+						<li>รายงานผลทุกเดือน อ่านเข้าใจง่าย</li>
+					</ul>
+					<div class="row">
+						<a href={LINE_URL} class="btn btn-orange">ดูบริการ AI SEO →</a>
+						<a href="#packages" class="btn">บริการ SEO</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- Automation -->
+			<section class="wrap" id="automation">
+				<div class="banner banner-yellow">
+					<div>
+						<span class="pill">AI Automation</span>
+						<h2>งานประจำที่ทำงานเอง</h2>
+						<p>ตอบแชทซ้ำๆ สรุปยอดขายประจำวัน ส่งใบเสนอราคา หรือคัดลอกข้อมูลข้ามระบบ ให้ AI ทำแทนได้ ทีมของคุณจะได้มีเวลาทำงานสำคัญ</p>
+						<div class="row">
+							<a href={LINE_URL} class="btn btn-dark">ดูว่าทำอะไรได้ →</a>
+							<a href={LINE_URL} class="btn">คุยฟรี ใช้ AI อย่างไรดี?</a>
+						</div>
+					</div>
+					<div class="mock tilt-r" aria-hidden="true">
+						<div class="mock-head">
+							<b>รายงานประจำวัน</b>
+							<span class="tag tag-orange">อัตโนมัติ</span>
+						</div>
+						<ul class="checks small">
+							<li>ยอดขายวันนี้ ฿48,200 (+12%)</li>
+							<li>การจองใหม่ 17 รายการ</li>
+							<li>ลูกค้าใหม่จาก Google 9 คน</li>
+						</ul>
+						<p class="mock-foot">ส่งเข้า LINE กลุ่มผู้บริหาร · 08:00</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- LINE booking -->
+			<section class="section wrap split">
+				<div>
+					<span class="pill pill-green">ระบบจองผ่าน LINE</span>
+					<h2>ระบบจองผ่าน LINE: ให้ลูกค้าจองในแอปที่ใช้ทุกวัน</h2>
+					<p>ลูกค้าไม่ต้องโหลดแอปใหม่ แค่เปิด LINE แล้วจองได้ทันที ระบบส่งแจ้งเตือนให้ทั้งร้านและลูกค้า ลดการลืมนัดและการจองซ้ำซ้อน</p>
+					<div class="row chips">
+						<span class="chip">ร้านเสริมสวยและสปา</span>
+						<span class="chip">คลินิก</span>
+						<span class="chip">ฟิตเนส</span>
+						<span class="chip">ร้านอาหาร</span>
+						<span class="chip">คอร์สเรียน</span>
+					</div>
+					<a href={LINE_URL} class="btn btn-orange">ดูตัวอย่างระบบจองผ่าน LINE →</a>
+				</div>
+				<div class="mock booking tilt-r" aria-hidden="true">
+					<p class="chat-who">จองคิว</p>
+					<div class="field field-green"><span>บริการ</span><b>ตัดผม + สระ</b></div>
+					<div class="field"><span>ช่าง</span><b>คุณมิ้นท์</b></div>
+					<div class="field"><span>วันที่</span><b>พฤหัส 23 ต.ค.</b></div>
+					<p class="small-label">เวลาว่าง</p>
+					<div class="slots">
+						<span>10:00</span><span>11:00</span><span class="off">12:00</span>
+						<span class="on">14:00</span><span>15:00</span><span>17:00</span>
+					</div>
+					<span class="btn btn-green block">ยืนยันการจอง</span>
+					<small class="muted">แจ้งเตือนผ่าน LINE ก่อนถึงนัด 1 วัน</small>
+				</div>
+			</section>
+
+			<!-- Back office -->
+			<section class="wrap">
+				<div class="banner banner-dark">
+					<div>
+						<span class="pill pill-orange">ระบบหลังบ้าน</span>
+						<h2>เลิกบริหารธุรกิจด้วยแชทและสเปรดชีต</h2>
+						<p>รวมข้อมูลลูกค้า ออเดอร์ สต็อก และพนักงานไว้ในระบบเดียวที่ออกแบบมาสำหรับธุรกิจคุณ เปิดดูได้ทุกที่ทั้งบนมือถือและคอมพิวเตอร์</p>
+						<div class="row">
+							<a href={LINE_URL} class="btn btn-orange">ปรึกษาระบบที่เหมาะกับคุณ →</a>
+							<a href={LINE_URL} class="btn">ดูตัวอย่าง</a>
+						</div>
+					</div>
+					<div class="tiles" aria-hidden="true">
+						{tools.map((t, i) => <span class={`tile t${i % 6}`}>{t}</span>)}
+					</div>
+					<div class="row chips full">
+						<span class="chip">เริ่มต้น ฿30,000</span>
+						<span class="chip">ทีมดูแล 24 ชั่วโมง</span>
+						<span class="chip">ใช้งานได้ใน 2 สัปดาห์</span>
+						<span class="chip">ข้อมูลปลอดภัย เป็นของคุณ</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- Process -->
+			<section class="section wrap">
+				<h2>จากการคุยครั้งแรก สู่<br />เว็บไซต์ที่ออนไลน์ใน 7 วัน</h2>
+				<div class="grid-4">
+					{
+						steps.map((s) => (
+							<article class={`card ${s.color ? `card-${s.color}` : ""}`}>
+								<span class="tag tag-orange">{s.tag}</span>
+								<h3>{s.title}</h3>
+								<p>{s.text}</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- Price CTA -->
+			<section class="wrap" id="contact">
+				<div class="cta">
+					<h2>เว็บไซต์ ฿9,990 เว็บแอปเริ่มต้น ฿30,000</h2>
+					<p>ปรึกษาฟรี ไม่มีข้อผูกมัด ตอบกลับภายในวันทำการ</p>
+					<a href={LINE_URL} class="btn btn-dark">ปรึกษาฟรี →</a>
+				</div>
+			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>

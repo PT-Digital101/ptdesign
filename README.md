@@ -1,4 +1,4 @@
-# Astro Starter Kit: Blog
+# Astro Blog on Cloudflare Workers
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
 
@@ -6,7 +6,7 @@
 
 <!-- dash-content-start -->
 
-Create a blog with Astro and deploy it on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+A minimal, fast blog built with [Astro](https://astro.build) and deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/).
 
 Features:
 
@@ -20,45 +20,107 @@ Features:
 
 <!-- dash-content-end -->
 
-## Getting Started
+## Requirements
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+- [Node.js](https://nodejs.org/) **22 or newer**
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up) (only needed to deploy)
+
+## Quick start
 
 ```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/astro-blog-starter-template
+npm install
+npm run dev
 ```
 
-A live public deployment of this template is available at [https://astro-blog-starter-template.templates.workers.dev](https://astro-blog-starter-template.templates.workers.dev)
+Open [http://localhost:4321](http://localhost:4321) to see the site. Changes reload automatically.
 
-## 🚀 Project Structure
+## Make it yours
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Before you publish, update these placeholders:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| What                          | Where                                                |
+| :---------------------------- | :--------------------------------------------------- |
+| Site title and description    | [src/consts.ts](src/consts.ts)                       |
+| Production URL (sitemap, RSS, canonical links) | `site` in [astro.config.mjs](astro.config.mjs) |
+| Worker name                   | `name` in [wrangler.json](wrangler.json)             |
+| Navigation and social links   | [src/components/Header.astro](src/components/Header.astro) |
+| Footer                        | [src/components/Footer.astro](src/components/Footer.astro) |
+| About page                    | [src/pages/about.astro](src/pages/about.astro)       |
+| Colors, fonts and layout      | [src/styles/global.css](src/styles/global.css)       |
+| Favicon and images            | [public/](public/)                                   |
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Then delete the sample posts in [src/content/blog/](src/content/blog/).
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Writing posts
 
-## 🧞 Commands
+Each `.md` or `.mdx` file in `src/content/blog/` becomes a post at `/blog/<file-name>/`. Every post needs frontmatter like this:
 
-All commands are run from the root of the project, from a terminal:
+```markdown
+---
+title: "My first real post"
+description: "A one-line summary shown in listings and link previews"
+pubDate: "2026-10-21"
+updatedDate: "2026-10-22"     # optional
+heroImage: "/my-hero.jpg"     # optional, a file in public/
+---
 
-| Command                           | Action                                           |
-| :-------------------------------- | :----------------------------------------------- |
-| `npm install`                     | Installs dependencies                            |
-| `npm run dev`                     | Starts local dev server at `localhost:4321`      |
-| `npm run build`                   | Build your production site to `./dist/`          |
-| `npm run preview`                 | Preview your build locally, before deploying     |
-| `npm run astro ...`               | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help`         | Get help using the Astro CLI                     |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
-| `npm wrangler tail`               | View real-time logs for all Workers              |
+Write your post here in Markdown.
+```
 
-## 👀 Want to learn more?
+The schema in [src/content.config.ts](src/content.config.ts) checks this frontmatter, so the build fails if a required field is missing or has the wrong type. Use `.mdx` when you need to use components inside a post. See [using-mdx.mdx](src/content/blog/using-mdx.mdx) for an example, and [markdown-style-guide.md](src/content/blog/markdown-style-guide.md) for how each Markdown element looks.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Project structure
+
+```text
+├── public/                 # Static files served as-is (images, fonts, favicon)
+├── src/
+│   ├── components/         # Reusable Astro components (header, footer, head tags)
+│   ├── content/blog/       # Blog posts (Markdown / MDX)
+│   ├── layouts/            # Page layouts, e.g. BlogPost.astro
+│   ├── pages/              # File-based routes: /, /about, /blog, /rss.xml
+│   ├── styles/global.css   # Site-wide styles
+│   ├── consts.ts           # Site title and description
+│   └── content.config.ts   # Blog collection and frontmatter schema
+├── astro.config.mjs        # Astro config: site URL, integrations, Cloudflare adapter
+└── wrangler.json           # Cloudflare Workers config
+```
+
+## Commands
+
+Run these from the project root:
+
+| Command              | Action                                                             |
+| :------------------- | :----------------------------------------------------------------- |
+| `npm install`        | Install dependencies                                               |
+| `npm run dev`        | Start the dev server at `localhost:4321`                           |
+| `npm run build`      | Build the production site to `./dist/`                             |
+| `npm run preview`    | Build, then serve it with the Workers runtime at `localhost:8787`  |
+| `npm run check`      | Build, type-check, and do a dry-run deploy (good before a PR)      |
+| `npm run deploy`     | Deploy `./dist/` to Cloudflare (run `npm run build` first)         |
+| `npm run cf-typegen` | Regenerate `worker-configuration.d.ts` after changing `wrangler.json` |
+| `npm run astro ...`  | Run Astro CLI commands, e.g. `npm run astro add`                   |
+| `npx wrangler tail`  | Stream live logs from your deployed Worker                         |
+
+## Deploying to Cloudflare
+
+1. Log in once: `npx wrangler login`
+2. Build and deploy:
+
+   ```bash
+   npm run build && npm run deploy
+   ```
+
+Wrangler prints your `*.workers.dev` URL when the deploy finishes. To use your own domain, add a [custom domain](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/) in the Cloudflare dashboard and set the same URL as `site` in `astro.config.mjs`.
+
+You can also connect this repository to Cloudflare with [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/) so each push to `main` deploys automatically.
+
+## Learn more
+
+- [Astro documentation](https://docs.astro.build)
+- [Astro content collections](https://docs.astro.build/en/guides/content-collections/)
+- [Astro on Cloudflare](https://docs.astro.build/en/guides/deploy/cloudflare/)
+- [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
 
 ## Credit
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+This theme is based on the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
