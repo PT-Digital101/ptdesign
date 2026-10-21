@@ -2,7 +2,7 @@
 title: "WooCommerce Launch Checklist: 12 Things to Check Before You Open Your Store"
 description: "Launching an online store is exciting — until the first order fails. Here's the pre-launch checklist I use for WooCommerce projects."
 pubDate: "2026-09-10"
-heroImage: "/images/projects/relax-moment.webp"
+heroImage: "/images/journal/woocommerce-launch-checklist.webp"
 ---
 
 On projects like [Relax Moment](/projects/relax-moment/) and [BerryDent](/projects/berrydent/), the design is only half the job. The other half is making sure every step from *"Add to cart"* to *"Thank you for your order"* works perfectly. This is the checklist I go through before any WooCommerce store goes live.

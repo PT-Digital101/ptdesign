@@ -2,7 +2,7 @@
 title: "A Simple WordPress Maintenance Routine to Keep Your Site Safe"
 description: "Most hacked WordPress sites weren't targeted — they were just left without updates. A short weekly and monthly routine prevents almost all of it."
 pubDate: "2026-10-08"
-heroImage: "/images/projects/zincia-clinic.webp"
+heroImage: "/images/journal/wordpress-maintenance-routine.webp"
 ---
 
 WordPress itself is secure. The problems usually come from what's around it: outdated plugins, weak passwords, and no backups. A website isn't a one-time project — like a car, it needs regular servicing. Here's the routine I follow for clients on maintenance plans.

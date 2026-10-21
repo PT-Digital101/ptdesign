@@ -2,7 +2,7 @@
 title: "WordPress SEO Basics: Set Up Your Site So Google Can Find It"
 description: "You don't need to be an SEO expert to get the foundations right. This is the setup checklist I run on every new WordPress site before launch."
 pubDate: "2026-08-20"
-heroImage: "/images/projects/thaiclinic-co.webp"
+heroImage: "/images/journal/wordpress-seo-basics.webp"
 ---
 
 Good SEO starts long before you write your first blog post. If the technical foundation is wrong, great content still struggles to rank. Here's the checklist I go through on every WordPress site I build.

@@ -2,7 +2,7 @@
 title: "WordPress vs Wix: Which Is Right for Your Business Website?"
 description: "Both can build a good-looking site. The difference shows up later — when you need to grow, sell online, or move. Here's how I help clients choose."
 pubDate: "2026-06-03"
-heroImage: "/images/projects/factory-builder.webp"
+heroImage: "/images/journal/wordpress-vs-wix.webp"
 ---
 
 I build on both WordPress and Wix, and clients often ask which one they should pick. There's no single right answer, but there is a right answer for *your* business. It mostly comes down to three questions: how much you'll grow, how much control you need, and who will maintain the site.

@@ -18,7 +18,7 @@ const posts = (await getCollection('blog')).sort(
 			{
 				posts.map((post) => (
 					<a href={`/blog/${post.id}/`} class="post-row">
-						{post.data.heroImage && <img src={post.data.heroImage} alt="" width="240" height="120" loading="lazy" />}
+						{post.data.heroImage && <img src={post.data.heroImage} alt="" width="240" height="126" loading="lazy" />}
 						<span class="post-row-text">
 							<span class="label">
 								<FormattedDate date={post.data.pubDate} />

@@ -2,7 +2,7 @@
 title: "10 Practical Ways to Speed Up a WordPress Website"
 description: "A slow site loses visitors and rankings. These are the fixes I apply on almost every WordPress project, ordered from biggest impact to smallest."
 pubDate: "2026-07-15"
-heroImage: "/images/projects/woodever.webp"
+heroImage: "/images/journal/speed-up-wordpress.webp"
 ---
 
 Speed isn't a nice-to-have. Visitors leave pages that take too long to load, and Google uses page experience signals (Core Web Vitals) as part of how it ranks pages. The good news: most slow WordPress sites suffer from the same handful of problems.
