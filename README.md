@@ -14,7 +14,6 @@ Features:
 - ✅ 100/100 Lighthouse performance
 - ✅ SEO-friendly with canonical URLs and OpenGraph data
 - ✅ Sitemap support
-- ✅ RSS Feed support
 - ✅ Markdown & MDX support
 - ✅ Built-in Observability logging
 
@@ -41,7 +40,7 @@ Before you publish, update these placeholders:
 | What                          | Where                                                |
 | :---------------------------- | :--------------------------------------------------- |
 | Site title and description    | [src/consts.ts](src/consts.ts)                       |
-| Production URL (sitemap, RSS, canonical links) | `site` in [astro.config.mjs](astro.config.mjs) |
+| Production URL (sitemap, canonical links) | `site` in [astro.config.mjs](astro.config.mjs) |
 | Worker name                   | `name` in [wrangler.json](wrangler.json)             |
 | Navigation and social links   | [src/components/Header.astro](src/components/Header.astro) |
 | Footer                        | [src/components/Footer.astro](src/components/Footer.astro) |
@@ -77,7 +76,7 @@ The schema in [src/content.config.ts](src/content.config.ts) checks this frontma
 │   ├── components/         # Reusable Astro components (header, footer, head tags)
 │   ├── content/blog/       # Blog posts (Markdown / MDX)
 │   ├── layouts/            # Page layouts, e.g. BlogPost.astro
-│   ├── pages/              # File-based routes: /, /about, /blog, /rss.xml
+│   ├── pages/              # File-based routes: /, /about, /blog
 │   ├── styles/global.css   # Site-wide styles
 │   ├── consts.ts           # Site title and description
 │   └── content.config.ts   # Blog collection and frontmatter schema

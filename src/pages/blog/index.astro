@@ -1,9 +1,8 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, CONTACT_URL } from '../../consts';
 import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog')).sort(
@@ -11,51 +10,26 @@ const posts = (await getCollection('blog')).sort(
 );
 ---
 
-<!doctype html>
-<html lang="th">
-	<head>
-		<BaseHead
-			title={`บทความ — ${SITE_TITLE}`}
-			description="เคล็ดลับเว็บไซต์ SEO, AI SEO และระบบจองผ่าน LINE สำหรับธุรกิจไทย"
-		/>
-	</head>
-	<body>
-		<Header />
-		<main class="wrap">
-			<section class="page-head">
-				<span class="pill pill-yellow">บทความ</span>
-				<h1>ความรู้สำหรับธุรกิจ<br />ที่อยากโตบนออนไลน์</h1>
-				<p class="section-lead">
-					เคล็ดลับเว็บไซต์ SEO, AI SEO และระบบจองผ่าน LINE ที่ใช้ได้จริง อ่านจบนำไปทำต่อได้ทันที
-				</p>
-			</section>
-
-			<section class="post-grid">
-				{
-					posts.map((post, i) => (
-						<a href={`/blog/${post.id}/`} class:list={['post-card', { featured: i === 0 }]}>
-							{post.data.heroImage && (
-								<img width={720} height={360} src={post.data.heroImage} alt="" loading={i === 0 ? 'eager' : 'lazy'} />
-							)}
-							<div class="post-body">
-								<span class="tag">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
-								<h2>{post.data.title}</h2>
-								<p>{post.data.description}</p>
-								<span class="read-more">อ่านต่อ →</span>
-							</div>
-						</a>
-					))
-				}
-			</section>
-
-			<section class="cta cta-compact">
-				<h2>อยากให้ธุรกิจของคุณถูกค้นเจอ?</h2>
-				<p>ปรึกษาฟรี ไม่มีข้อผูกมัด ตอบกลับภายในวันทำการ</p>
-				<a href={CONTACT_URL} class="btn btn-dark">ปรึกษาฟรี →</a>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title="Journal" description="Notes on UX/UI design, WordPress development and SEO from PT.">
+	<section class="panel reveal">
+		<SectionHead title="Journal" />
+		<p class="lead">Notes on UX/UI design, WordPress development and SEO.</p>
+		<div class="post-list">
+			{
+				posts.map((post) => (
+					<a href={`/blog/${post.id}/`} class="post-row">
+						{post.data.heroImage && <img src={post.data.heroImage} alt="" width="240" height="120" loading="lazy" />}
+						<span class="post-row-text">
+							<span class="label">
+								<FormattedDate date={post.data.pubDate} />
+							</span>
+							<b>{post.data.title}</b>
+							<span class="muted">{post.data.description}</span>
+						</span>
+						<Icon name="arrow-up-right" size={20} class="contact-arrow" />
+					</a>
+				))
+			}
+		</div>
+	</section>
+</Layout>

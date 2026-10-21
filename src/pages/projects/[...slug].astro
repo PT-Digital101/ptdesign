@@ -1,0 +1,56 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHead from '../../components/SectionHead.astro';
+
+export async function getStaticPaths() {
+	const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+	return projects.map((project, i) => ({
+		params: { slug: project.id },
+		props: { project, next: projects[(i + 1) % projects.length] },
+	}));
+}
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	next: CollectionEntry<'projects'>;
+}
+
+const { project, next } = Astro.props;
+const { title, description, categories, cover, url } = project.data;
+const { Content } = await render(project);
+---
+
+<Layout title={title} description={description} image={cover}>
+	<section class="panel reveal">
+		<div class="case-top">
+			<a href="/projects" class="link-back"><Icon name="arrow-left" size={18} /> Back</a>
+			<span class="label">{categories.join(', ')}</span>
+		</div>
+		<h1 class="display case-title">{title}</h1>
+		<p class="lead">{description}</p>
+		<div class="case-cover">
+			<img src={cover} alt={`${title} website design`} width="768" height="576" />
+		</div>
+		{
+			url && (
+				<a href={url} class="btn btn-accent" target="_blank" rel="noopener">
+					Visit Website <Icon name="arrow-up-right" size={18} />
+				</a>
+			)
+		}
+	</section>
+
+	<article class="panel case-body rich reveal">
+		<Content />
+	</article>
+
+	<section class="panel reveal">
+		<SectionHead title="Next Project" />
+		<div class="project-grid single">
+			<ProjectCard project={next} />
+		</div>
+	</section>
+</Layout>

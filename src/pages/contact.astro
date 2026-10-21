@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { SOCIALS } from '../consts';
+
+const notes: Record<string, string> = {
+	LINE: 'Fastest reply — chat with me directly',
+	LinkedIn: 'Work history and recommendations',
+	Facebook: 'Updates and recent work',
+	Instagram: 'Design snippets and behind the scenes',
+};
+---
+
+<Layout title="Contact Me" description="Let's build together. Reach PT on LINE, LinkedIn, Facebook or Instagram to start your website project.">
+	<section class="panel reveal">
+		<SectionHead title="Let's Build Together" />
+		<p class="lead">
+			Tell me about your business, your goals and your timeline. I'll get back to you with ideas and a clear
+			plan — usually within one working day.
+		</p>
+		<div class="contact-grid">
+			{
+				SOCIALS.map((s) => (
+					<a href={s.href} class="contact-card" target="_blank" rel="noopener">
+						<span class="skill-icon">
+							<Icon name={s.icon} size={24} />
+						</span>
+						<span class="contact-text">
+							<b>{s.label}</b>
+							<span>{notes[s.label]}</span>
+						</span>
+						<Icon name="arrow-up-right" size={20} class="contact-arrow" />
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="panel reveal">
+		<SectionHead num="01" title="What to send me" />
+		<ol class="steps">
+			<li><b>Your business</b><span>What you do and who your customers are.</span></li>
+			<li><b>The goal</b><span>New website, redesign, online shop, or a booking system.</span></li>
+			<li><b>Examples you like</b><span>Links to sites whose look or feel you want.</span></li>
+			<li><b>Timeline &amp; budget</b><span>A rough range is enough to plan the right scope.</span></li>
+		</ol>
+	</section>
+</Layout>

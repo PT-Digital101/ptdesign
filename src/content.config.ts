@@ -16,4 +16,17 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { blog };
+const projects = defineCollection({
+	// Case studies in `src/content/projects/`. Lower `order` shows first.
+	loader: glob({ base: "./src/content/projects", pattern: "**/*.{md,mdx}" }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		categories: z.array(z.string()),
+		cover: z.string(),
+		url: z.string().url().optional(),
+		order: z.number().default(99),
+	}),
+});
+
+export const collections = { blog, projects };

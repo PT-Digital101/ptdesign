@@ -1,33 +1,17 @@
 ---
+// Floating bottom navigation dock, shown on every page.
 import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE, CONTACT_URL, NAV_LINKS } from '../consts';
+import Icon from './Icon.astro';
+import { NAV_LINKS } from '../consts';
 ---
 
-<div class="topbar">
-	<div class="wrap topbar-inner">
-		<a href={CONTACT_URL}>📞 ติดต่อเรา</a>
-		<span><b>TH</b> · EN</span>
-	</div>
-</div>
-
-<header class="nav">
-	<div class="wrap nav-inner">
-		<a href="/" class="logo">
-			<span class="logo-mark" aria-hidden="true"></span>
-			{SITE_TITLE}
-		</a>
-		<nav class="nav-links" aria-label="เมนูหลัก">
-			{
-				NAV_LINKS.map((item) => (
-					<HeaderLink href={item.href}>
-						{item.label}
-						{item.badge && <span class="badge">{item.badge}</span>}
-					</HeaderLink>
-				))
-			}
-		</nav>
-		<div class="nav-cta">
-			<a href={CONTACT_URL} class="btn btn-orange btn-sm">ปรึกษาฟรี</a>
-		</div>
-	</div>
-</header>
+<nav class="dock" aria-label="Main">
+	{
+		NAV_LINKS.map((item) => (
+			<HeaderLink href={item.href} class="dock-link">
+				<Icon name={item.icon} size={22} />
+				<span class="dock-label">{item.label}</span>
+			</HeaderLink>
+		))
+	}
+</nav>

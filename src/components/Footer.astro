@@ -1,40 +1,39 @@
 ---
-import { SITE_TITLE, CONTACT_URL } from '../consts';
+import Icon from './Icon.astro';
+import { SOCIALS, SERVICES, SITE_TITLE } from '../consts';
 
 const today = new Date();
+// Repeat the list so the marquee loops without a gap.
+const marquee = [...SERVICES, ...SERVICES, ...SERVICES, ...SERVICES];
 ---
 
-<footer class="footer">
-	<div class="wrap footer-grid">
-		<div>
-			<a href="/" class="logo">
-				<span class="logo-mark" aria-hidden="true"></span>
-				{SITE_TITLE}
-			</a>
-			<p class="muted">ทีมเทคที่ช่วยธุรกิจไทยเติบโตบนโลกออนไลน์</p>
-			<a href={CONTACT_URL} class="btn btn-orange btn-sm">ปรึกษาฟรี →</a>
+<footer class="site-footer">
+	<section class="wrap">
+		<div class="panel cta-panel">
+			<p class="eyebrow">Got something in mind?</p>
+			<h2 class="display">Have a<br />project <span class="accent">idea?</span></h2>
+			<a href="/contact" class="btn btn-accent">Let's Connect! <Icon name="arrow-right" size={18} /></a>
+			<div class="socials">
+				{
+					SOCIALS.map((s) => (
+						<a href={s.href} class="icon-btn" target="_blank" rel="noopener" aria-label={s.label}>
+							<Icon name={s.icon} size={18} />
+						</a>
+					))
+				}
+			</div>
+			<p class="muted small">Thanks for visiting, see you again soon.</p>
 		</div>
-		<div>
-			<h4>บริการ</h4>
-			<a href="/#services">ทำเว็บไซต์</a>
-			<a href="/#ai-seo">SEO และ AI SEO</a>
-			<a href="/#automation">AI Automation</a>
-		</div>
-		<div>
-			<h4>ระบบ</h4>
-			<a href="/#services">ระบบจองผ่าน LINE</a>
-			<a href="/#services">ระบบหลังบ้าน</a>
-			<a href="/#packages">แพ็กเกจ</a>
-		</div>
-		<div>
-			<h4>บริษัท</h4>
-			<a href="/about">เกี่ยวกับเรา</a>
-			<a href="/blog">บทความ</a>
-			<a href="/rss.xml">RSS</a>
+	</section>
+
+	<div class="marquee" aria-label={SERVICES.join(', ')}>
+		<div class="marquee-track" aria-hidden="true">
+			{marquee.map((s) => <span>{s}<i>✦</i></span>)}
 		</div>
 	</div>
-	<div class="wrap footer-bottom">
+
+	<div class="wrap footer-meta">
 		<span>© {today.getFullYear()} {SITE_TITLE}</span>
-		<span>นโยบายความเป็นส่วนตัว · ข้อกำหนดการใช้งาน</span>
+		<a href="/blog">Journal</a>
 	</div>
 </footer>

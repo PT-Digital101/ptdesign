@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHead from '../../components/SectionHead.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const categories = [...new Set(projects.flatMap((p) => p.data.categories))].sort();
+---
+
+<Layout title="Projects" description="Selected websites designed and developed by PT — eCommerce, clinics, companies, SaaS and more.">
+	<section class="panel reveal">
+		<SectionHead title="All Projects">
+			<span class="label muted">{projects.length} projects</span>
+		</SectionHead>
+		<p class="lead">
+			Websites I've designed and built for brands across eCommerce, healthcare, construction, travel and more.
+		</p>
+
+		<div class="filters" role="group" aria-label="Filter by category">
+			<button type="button" class="chip is-active" data-filter="all" aria-pressed="true">All</button>
+			{
+				categories.map((c) => (
+					<button type="button" class="chip" data-filter={c} aria-pressed="false">
+						{c}
+					</button>
+				))
+			}
+		</div>
+
+		<div class="project-grid" id="project-grid">
+			{projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+		</div>
+	</section>
+</Layout>
+
+<script>
+	const chips = document.querySelectorAll<HTMLButtonElement>('.filters .chip');
+	const cards = document.querySelectorAll<HTMLElement>('#project-grid .project-card');
+	chips.forEach((chip) =>
+		chip.addEventListener('click', () => {
+			const f = chip.dataset.filter!;
+			chips.forEach((c) => {
+				const on = c === chip;
+				c.classList.toggle('is-active', on);
+				c.setAttribute('aria-pressed', String(on));
+			});
+			cards.forEach((card) => {
+				card.hidden = f !== 'all' && !card.dataset.cats!.split(',').includes(f);
+			});
+		}),
+	);
+</script>

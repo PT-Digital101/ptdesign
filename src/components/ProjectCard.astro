@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	index?: number;
+}
+
+const { project, index } = Astro.props;
+const { title, categories, cover } = project.data;
+---
+
+<a href={`/projects/${project.id}/`} class="project-card" data-cats={categories.join(',')}>
+	<div class="project-media">
+		<img src={cover} alt={`${title} website design`} width="768" height="576" loading="lazy" decoding="async" />
+		<span class="project-go" aria-hidden="true"><Icon name="arrow-up-right" size={20} /></span>
+	</div>
+	<div class="project-meta">
+		<span class="label">{categories.join(', ')}</span>
+		{index !== undefined && <span class="label muted">{String(index + 1).padStart(2, '0')}</span>}
+	</div>
+	<h3 class="project-title">{title}</h3>
+</a>
